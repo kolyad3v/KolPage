@@ -10,18 +10,18 @@ import Resources from './Utils/Resources.ts'
 
 import sources from './sources.ts'
 
-let instance = null
+let instance: null | Experience = null
 
 export default class Experience {
-	public canvas: HTMLCanvasElement
-	public debug: Debug
-	public sizes: Sizes
-	public time: Time
-	public scene: THREE.Scene
-	public resources: Resources
-	public camera: Camera
-	public renderer: Renderer
-	public world: World
+	public canvas!: HTMLCanvasElement
+	public debug!: Debug
+	public sizes!: Sizes
+	public time!: Time
+	public scene!: THREE.Scene
+	public resources!: Resources
+	public camera!: Camera
+	public renderer!: Renderer
+	public world!: World
 	constructor(_canvas?: HTMLCanvasElement) {
 		// Singleton
 		if (instance) {
@@ -34,7 +34,7 @@ export default class Experience {
 		window.experience = this
 
 		// Options
-		this.canvas = _canvas
+		this.canvas = _canvas as HTMLCanvasElement
 
 		// Setup
 		this.debug = new Debug()

@@ -2,9 +2,20 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import EventEmitter from './EventEmitter.js'
+import { ISource } from '../_interfaces.js'
 
 export default class Resources extends EventEmitter {
-	constructor(sources) {
+	sources: ISource[]
+	items: {}
+	toLoad: number
+	loaded: number
+	loaders!: {
+		dracoLoader: DRACOLoader, 
+		gltfLoader: GLTFLoader,
+		textureLoader: THREE.TextureLoader,
+		cubeTextureLoader: THREE.CubeTextureLoader
+	}
+	constructor(sources: ISource[]) {
 		super()
 
 		this.sources = sources

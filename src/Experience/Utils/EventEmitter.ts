@@ -6,7 +6,7 @@ export default class EventEmitter {
 		this.callbacks.base = {}
 	}
 
-	on(_names, callback) {
+	on(_names:string, callback) {
 		// Errors
 		if (typeof _names === 'undefined' || _names === '') {
 			console.warn('wrong names')
@@ -22,7 +22,7 @@ export default class EventEmitter {
 		const names = this.resolveNames(_names)
 
 		// Each name
-		names.forEach((_name) => {
+		names.forEach((_name:string) => {
 			// Resolve name
 			const name: NameObject = this.resolveName(_name)
 

@@ -1,8 +1,18 @@
 import Experience from '../Experience'
-import { PointLight } from 'three'
+import { PointLight, Scene } from 'three'
+import Debug from '../Utils/Debug'
+import Time from '../Utils/Time'
 
 export default class InteractivePointLight {
-	constructor(position) {
+	experience: Experience
+	scene: Scene
+	debug: Debug
+	time: Time
+	position: { x: number; y: number; z: number }
+	debugFolder: any
+	debugObject: { color: string }
+	light: PointLight
+	constructor(position: { x: number; y: number; z: number }) {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
 		this.debug = this.experience.debug
@@ -18,6 +28,7 @@ export default class InteractivePointLight {
 			this.debugFolder = this.debug.ui.addFolder('PointLight')
 			this.debugFolder.close()
 		}
+
 		this.debugObject = {
 			color: '#4766ff',
 		}

@@ -3,3 +3,10 @@ export interface NameObject {
 	value: string
 	original: string
 }
+
+export interface ISource
+	{
+		name: string, 
+		type: string, 
+		path: string | string[]
+	}

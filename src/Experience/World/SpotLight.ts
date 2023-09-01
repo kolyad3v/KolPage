@@ -1,15 +1,27 @@
 import Experience from '../Experience'
-import { SpotLight, CameraHelper, Vector2 } from 'three'
-import gsap from 'gsap'
+import { Scene, SpotLight, Vector2 } from 'three'
+// import gsap from 'gsap'
+import Debug from '../Utils/Debug'
+import Sizes from '../Utils/Sizes'
 export default class InteractiveSpotLight {
-	constructor(name) {
+	experience: Experience
+	scene: Scene
+	debug: Debug
+	sizes: Sizes
+	webgl: HTMLCanvasElement
+	lightOn: boolean
+	mouse: Vector2
+	debugFolder: any
+	debugObject: { color: string }
+	light: SpotLight
+	constructor() {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
 		this.debug = this.experience.debug
 		this.sizes = this.experience.sizes
 
 		// Animation
-		this.webgl = document.querySelector('.webgl')
+		this.webgl = document.querySelector('.webgl') as HTMLCanvasElement
 		this.lightOn = true
 		this.mouse = new Vector2()
 

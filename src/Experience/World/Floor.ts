@@ -2,6 +2,16 @@ import * as THREE from 'three'
 import Experience from '../Experience.js'
 
 export default class Floor {
+	experience: Experience
+	scene: any
+	resources: any
+	resourceMatcap: any
+	debug: any
+	debugObject: { color: string }
+	debugFolder: any
+	geometry!: THREE.CircleGeometry
+	material!: THREE.MeshStandardMaterial
+	mesh!: THREE.Mesh<THREE.CircleGeometry, THREE.Material>
 	constructor() {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
