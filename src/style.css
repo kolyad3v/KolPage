@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;900&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	overflow: hidden;
+}
+
+.webgl {
+	position: fixed;
+	top: 0;
+	left: 0;
+	outline: none;
+}
+
+.infoBoxStp,
+.infoBoxRmj,
+.infoBoxEldia,
+.infoBoxForest,
+.infoBoxSpace {
+	position: absolute;
+	left: 50vw;
+	width: 50vw;
+	height: 100vh;
+	margin: auto;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.722);
+	color: aliceblue;
+	font-family: 'Poppins', sans-serif;
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.1em;
+	cursor: help;
+	transform: scale(0, 0);
+	transform-origin: right;
+	transition: transform 0.3s;
+
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: column;
+}
+
+.infoBoxStp.visible,
+.infoBoxRmj.visible,
+.infoBoxEldia.visible,
+.infoBoxSpace.visible,
+.infoBoxForest.visible {
+	transform: scale(1, 1);
+}
+
+a {
+	font-family: 'Poppins', sans-serif;
+	text-decoration: none;
+	color: aliceblue;
+}
+
+span {
+	font-weight: bolder;
+}
+
+p {
+	margin-left: 2rem;
+	margin-right: 2rem;
+}
