@@ -1,7 +1,28 @@
+import { Scene } from 'three'
 import Experience from '../../Experience'
+import { IPosition } from '../../_interfaces'
+import Debug from '../../Utils/Debug'
+import Resources from '../../Utils/Resources'
 
 export default class DisplayBoard {
-	constructor(name, position, rotation, source) {
+	experience: Experience
+	scene: Scene
+	debug: Debug
+	resources: Resources
+	resource: any
+	name: string
+	x: number
+	y: number
+	z: number
+	rotation: number
+	debugFolder: any
+	model: any
+	constructor(
+		name: string,
+		position: IPosition,
+		rotation: number,
+		source: string
+	) {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
 		this.debug = this.experience.debug

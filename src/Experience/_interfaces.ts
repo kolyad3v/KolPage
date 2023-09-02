@@ -1,6 +1,6 @@
 export interface NameObject {
 	namespace: string
-	value: string
+	value: number | string
 	original: string
 }
 

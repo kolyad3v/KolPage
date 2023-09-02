@@ -2,12 +2,40 @@ import * as THREE from 'three'
 import Experience from '../Experience'
 import EventEmitter from './EventEmitter'
 import gsap from 'gsap'
-import Camera from '../Camera';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import Sizes from './Sizes'
 
 export default class Raycaster extends EventEmitter {
-	private experience: Experience;
-	private camera: Camera;
-	
+	private experience: Experience
+	private camera: THREE.PerspectiveCamera
+	private controls: OrbitControls
+	objectsToTestArray: THREE.Object3D<Event>[]
+	sizes: Sizes
+	mouse: THREE.Vector2
+	//TODO type the below
+	webglStyle: any
+	infoBoxStp: any
+	infoBoxRmj: any
+	infoBoxEldia: any
+	infoBoxSpace: any
+	infoBoxForest: any
+	stpHovered: boolean
+	eldiaHovered: boolean
+	rmjHovered: boolean
+	spaceHovered: boolean
+	forestHovered: boolean
+	noHover: boolean
+	grabOpen: boolean
+	smoothToSpace: () => void
+	smoothToEldia: () => void
+	smoothToRmj: () => void
+	smoothToStp: () => void
+	smoothToForest: () => void
+	smoothToStart: () => Promise<void>
+	raycaster!: THREE.Raycaster
+	intersectObjects: any
+	objectHit!: THREE.Object3D
+
 	constructor() {
 		super()
 
@@ -27,7 +55,7 @@ export default class Raycaster extends EventEmitter {
 		this.mouse = new THREE.Vector2()
 
 		// interactions
-		this.webglStyle = document.querySelector('.webgl').style
+		this.webglStyle = (document.querySelector('.webgl') as HTMLElement).style
 		this.infoBoxStp = document.querySelector('.infoBoxStp')
 		this.infoBoxRmj = document.querySelector('.infoBoxRmj')
 		this.infoBoxEldia = document.querySelector('.infoBoxEldia')
@@ -215,26 +243,26 @@ export default class Raycaster extends EventEmitter {
 		// interactions
 		// do the same for other objects when ready -->
 
-		document.querySelector('.webgl').addEventListener('mousedown', () => {
+		document.querySelector('.webgl')!.addEventListener('mousedown', () => {
 			this.grabOpen = false
 			this.webglStyle.cursor = 'grabbing'
 		})
-		document.querySelector('.webgl').addEventListener('mouseup', () => {
+		document.querySelector('.webgl')!.addEventListener('mouseup', () => {
 			this.grabOpen = true
 		})
-		document.querySelector('.webgl').addEventListener('click', () => {
+		document.querySelector('.webgl')!.addEventListener('click', () => {
 			this.stpHovered && this.smoothToStp()
 			this.eldiaHovered && this.smoothToEldia()
 			this.rmjHovered && this.smoothToRmj()
 			this.spaceHovered && this.smoothToSpace()
 			this.forestHovered && this.smoothToForest()
 		})
-		document.querySelector('.webgl').addEventListener('click', () => {
+		document.querySelector('.webgl')!.addEventListener('click', () => {
 			this.noHover && this.smoothToStart()
 		})
 	}
 
-	showNotice(board) {
+	showNotice(board: string) {
 		switch (board) {
 			case 'Space':
 				if (!this.spaceHovered) {
@@ -260,6 +288,7 @@ export default class Raycaster extends EventEmitter {
 					this.stpHovered = true
 					this.noHover = false
 				}
+				break
 			case 'forest':
 				if (!this.forestHovered) {
 					this.forestHovered = true

@@ -1,16 +1,25 @@
+import { Scene } from 'three'
 import Experience from '../../Experience'
+import { IPosition } from '../../_interfaces.ts'
 import DisplayBoard from './DisplayBoard.js'
 import Text from './Text.ts'
+import Resources from '../../Utils/Resources.ts'
 
 export default class ProjectDisplay {
+	experience: Experience
+	scene: Scene
+	resources: Resources
+	fontSize: number
+	displayBoard: DisplayBoard
+	header: Text
 	constructor(
-		name,
-		boardCoords,
-		boardRotation,
-		headerCoords,
-		headerRotation,
-		source,
-		fontSize
+		name: string,
+		boardCoords: { x: number; y: number; z: number },
+		boardRotation: number,
+		headerCoords: IPosition,
+		headerRotation: number,
+		source: string,
+		fontSize: number
 	) {
 		this.experience = new Experience()
 		this.scene = this.experience.scene

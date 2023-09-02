@@ -1,12 +1,11 @@
 import { NameObject } from '../_interfaces'
 export default class EventEmitter {
-	public callbacks: { [key: string]: {} } = { base: {} }
+	public callbacks: { [key: string]: { [key: string | number]: (() => void)[] } }
 	constructor() {
-		this.callbacks = { base: {} }
-		this.callbacks.base = {}
+		this.callbacks = { base: { value: [] } }
 	}
 
-	on(_names: string, callback:()=>void) {
+	on(_names: string, callback: () => void) {
 		// Errors
 		if (typeof _names === 'undefined' || _names === '') {
 			console.warn('wrong names')
@@ -28,11 +27,13 @@ export default class EventEmitter {
 
 			// Create namespace if not exist
 			if (!(this.callbacks[name.namespace] instanceof Object))
-				this.callbacks[name.namespace] = {}
+				this.callbacks[name.namespace] = { value: [] }
 
 			// Create callback if not exist
-			if (!(this.callbacks[name.namespace][name.value] instanceof Array))
+
+			if (!(this.callbacks[name.namespace][name.value] instanceof Array)) {
 				this.callbacks[name.namespace][name.value] = []
+			}
 
 			// Add callback
 			this.callbacks[name.namespace][name.value].push(callback)
@@ -41,7 +42,7 @@ export default class EventEmitter {
 		return this
 	}
 
-	off(_names) {
+	off(_names: string) {
 		// Errors
 		if (typeof _names === 'undefined' || _names === '') {
 			console.warn('wrong name')
@@ -52,7 +53,7 @@ export default class EventEmitter {
 		const names = this.resolveNames(_names)
 
 		// Each name
-		names.forEach((_name) => {
+		names.forEach((_name: string) => {
 			// Resolve name
 
 			const name: NameObject = this.resolveName(_name) as NameObject
@@ -98,35 +99,36 @@ export default class EventEmitter {
 		return this
 	}
 
-	trigger(_name: string, _args?: string[] | null) {
+	trigger(_name: string, _args?: [] | null) {
 		// Errors
 		if (typeof _name === 'undefined' || _name === '') {
 			console.warn('wrong name')
 			return false
 		}
 
-		let finalResult = undefined
+		let finalResult: any = undefined
 		let result = null
 
 		// Default args
-		const args = !(_args instanceof Array) ? [] : _args
+		// const args = !(_args instanceof Array) ? [] : _args
 
 		// Resolve names (should on have one event)
-		let name = this.resolveNames(_name)
+		let name: string[] = this.resolveNames(_name)
 
 		// Resolve name
-		name = this.resolveName(name[0])
+
+		let r_name: NameObject = this.resolveName(name[0])
 
 		// Default namespace
-		if (name.namespace === 'base') {
+		if (r_name.namespace === 'base') {
 			// Try to find callback in each namespace
 			for (const namespace in this.callbacks) {
 				if (
 					this.callbacks[namespace] instanceof Object &&
-					this.callbacks[namespace][name.value] instanceof Array
+					this.callbacks[namespace][r_name.value] instanceof Array
 				) {
-					this.callbacks[namespace][name.value].forEach(function (callback) {
-						result = callback.apply(this, args)
+					this.callbacks[namespace][r_name.value].forEach((callback) => {
+						result = callback.apply(this)
 
 						if (typeof finalResult === 'undefined') {
 							finalResult = result
@@ -137,32 +139,35 @@ export default class EventEmitter {
 		}
 
 		// Specified namespace
-		else if (this.callbacks[name.namespace] instanceof Object) {
-			if (name.value === '') {
+		else if (this.callbacks[r_name.namespace] instanceof Object) {
+			if (r_name.value === '') {
 				console.warn('wrong name')
 				return this
 			}
 
-			this.callbacks[name.namespace][name.value].forEach(function (callback) {
-				result = callback.apply(this, args)
+			this.callbacks[r_name.namespace][r_name.value].forEach(
+				(callback: () => void) => {
+					result = callback.apply(this)
 
-				if (typeof finalResult === 'undefined') finalResult = result
-			})
+					if (typeof finalResult === 'undefined') finalResult = result
+				}
+			)
 		}
 
 		return finalResult
 	}
 
-	resolveNames(_names) {
+	resolveNames(_names: string): string[] {
 		let names = _names
+		let processedNames: string[]
 		names = names.replace(/[^a-zA-Z0-9 ,/.]/g, '')
 		names = names.replace(/[,/]+/g, ' ')
-		names = names.split(' ')
+		processedNames = names.split(' ')
 
-		return names
+		return processedNames
 	}
 
-	resolveName(name: string) {
+	resolveName(name: string): NameObject {
 		const newName: NameObject = {} as NameObject
 		const parts = name.split('.')
 
