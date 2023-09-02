@@ -10,7 +10,7 @@ import Resources from '../Utils/Resources.ts'
 export default class World {
 	experience: Experience
 	scene: any
-	resources:Resources
+	resources: Resources
 	spotLight: InteractiveSpotLight
 	floor!: Floor
 	eldiaProject!: ProjectDisplay
@@ -29,7 +29,7 @@ export default class World {
 		this.resources = this.experience.resources
 
 		// Lighting
-		this.spotLight = new InteractiveSpotLight("light")
+		this.spotLight = new InteractiveSpotLight()
 
 		// Wait for resources
 		this.resources.on('ready', () => {
@@ -96,12 +96,7 @@ export default class World {
 				-0.5,
 				0.3
 			)
-			this.bioText = new Text(
-				'BE: getting to grips with c#, .Net',
-				{ x: 8.7, y: 0.5, z: 3 },
-				-0.5,
-				0.3
-			)
+			this.bioText = new Text('BE: C#,.NET', { x: 8.7, y: 0.5, z: 3 }, -0.5, 0.3)
 
 			// Raycaster For Animations
 

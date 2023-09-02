@@ -11,6 +11,7 @@ export default class Environment {
 	private debug: Debug
 	private debugFolder: any // Assuming this is the correct type
 	private debugObject: { color: number }
+	public environmentMap!: { intensity: number; texture: THREE.CubeTexture }
 
 	constructor() {
 		this.experience = new Experience()
@@ -36,8 +37,8 @@ export default class Environment {
 		sunLight.shadow.normalBias = 0.05
 		sunLight.shadow.camera.right = 8
 		sunLight.shadow.camera.top = 5
-		sunLight.position.set(-1.7, 10, -5.6)
-		sunLight.intensity = 0.2
+		sunLight.position.set(-6.1, 9.9, 35.7)
+		sunLight.intensity = 2.2
 
 		const sunLightCameraHelper = new CameraHelper(sunLight.shadow.camera)
 		sunLightCameraHelper.visible = false
@@ -83,14 +84,15 @@ export default class Environment {
 	}
 
 	setEnvironmentMap() {
-		const environmentMap = {} as { intensity: number; texture: THREE.Texture }
+		this.environmentMap = {} as { intensity: number; texture: THREE.CubeTexture }
 
-		environmentMap.intensity = 1
-		environmentMap.texture = this.resources.items.environmentMapTexture
-		environmentMap.texture.encoding = THREE.sRGBEncoding
+		this.environmentMap.intensity = 1
+		this.environmentMap.texture = this.resources.items
+			.environmentMapTexture as THREE.CubeTexture
+		this.environmentMap.texture.encoding = THREE.sRGBEncoding
 
-		this.scene.environment = environmentMap.texture
-		this.scene.background = environmentMap.texture
+		this.scene.environment = this.environmentMap.texture
+		this.scene.background = this.environmentMap.texture
 
 		const updateMaterials = () => {
 			this.scene.traverse((child) => {
@@ -98,8 +100,8 @@ export default class Environment {
 					child instanceof THREE.Mesh &&
 					child.material instanceof THREE.MeshStandardMaterial
 				) {
-					child.material.envMap = environmentMap.texture
-					child.material.envMapIntensity = environmentMap.intensity
+					child.material.envMap = this.environmentMap.texture
+					child.material.envMapIntensity = this.environmentMap.intensity
 					child.material.needsUpdate = true
 				}
 			})
@@ -109,7 +111,7 @@ export default class Environment {
 		// Debug
 		if (this.debug.active) {
 			this.debugFolder
-				.add(environmentMap, 'intensity')
+				.add(this.environmentMap, 'intensity')
 				.name('envMapIntensity')
 				.min(0)
 				.max(40)

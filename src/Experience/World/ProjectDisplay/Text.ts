@@ -1,16 +1,40 @@
 import Experience from '../../Experience'
+//@ts-ignore
+// TODO fix link to types in three dec file.
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
+//@ts-ignore
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
-import {
-	Mesh,
-	MeshMatcapMaterial,
-	MeshNormalMaterial,
-	MeshStandardMaterial,
-	MeshToonMaterial,
-} from 'three'
+import { Mesh, MeshStandardMaterial, Scene } from 'three'
+import Debug from '../../Utils/Debug'
+import Resources from '../../Utils/Resources'
+import { IPosition } from '../../_interfaces'
 
 export default class Text {
-	constructor(text, position, rotation, fontSize) {
+	experience: Experience
+	scene: Scene
+	debug: Debug
+	resources: Resources
+	resourceMatcap: any
+	fontLoader: FontLoader
+	text: string
+	x: number
+	y: number
+	z: number
+	rotation: number
+	fontSize: number
+	debugFolder: any
+	materialText: MeshStandardMaterial = new MeshStandardMaterial({
+		metalness: 1,
+		roughness: 0,
+	})
+	textGeometry: TextGeometry
+	textMesh!: Mesh<TextGeometry, MeshStandardMaterial>
+	constructor(
+		text: string,
+		position: IPosition,
+		rotation: number,
+		fontSize: number
+	) {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
 		this.debug = this.experience.debug
@@ -36,12 +60,9 @@ export default class Text {
 	}
 
 	textInit() {
-		this.fontLoader.load('/fonts/Poppins.json', (font) => {
+		this.fontLoader.load('/fonts/Poppins.json', (font: JSON) => {
 			// Material
-			this.materialText = new MeshStandardMaterial({
-				metalness: 1,
-				roughness: 0,
-			})
+			this.materialText
 			let size
 			this.fontSize ? (size = this.fontSize) : (size = 0.4)
 			// Geometry

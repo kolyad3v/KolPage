@@ -1,12 +1,12 @@
 import { NameObject } from '../_interfaces'
 export default class EventEmitter {
-	public callbacks: { base: {} } = { base: {} }
+	public callbacks: { [key: string]: {} } = { base: {} }
 	constructor() {
 		this.callbacks = { base: {} }
 		this.callbacks.base = {}
 	}
 
-	on(_names:string, callback) {
+	on(_names: string, callback:()=>void) {
 		// Errors
 		if (typeof _names === 'undefined' || _names === '') {
 			console.warn('wrong names')
@@ -22,7 +22,7 @@ export default class EventEmitter {
 		const names = this.resolveNames(_names)
 
 		// Each name
-		names.forEach((_name:string) => {
+		names.forEach((_name: string) => {
 			// Resolve name
 			const name: NameObject = this.resolveName(_name)
 
@@ -98,14 +98,14 @@ export default class EventEmitter {
 		return this
 	}
 
-	trigger(_name, _args) {
+	trigger(_name: string, _args?: string[] | null) {
 		// Errors
 		if (typeof _name === 'undefined' || _name === '') {
 			console.warn('wrong name')
 			return false
 		}
 
-		let finalResult = null
+		let finalResult = undefined
 		let result = null
 
 		// Default args

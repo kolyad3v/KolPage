@@ -40,4 +40,9 @@ export default [
 		type: 'gltfModel',
 		path: 'models/tile6.glb',
 	},
+	{
+		name: 'github',
+		type: 'gltfModel',
+		path: 'models/github-icon.glb',
+	},
 ]

@@ -1,4 +1,6 @@
+//@ts-ignore
 import * as dat from 'lil-gui'
+//@ts-ignore'
 import { GUI } from 'lil-gui'
 
 export default class Debug {

@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import Resources from '../Utils/Resources.js'
 
 export default class Floor {
 	experience: Experience
-	scene: any
-	resources: any
+	scene: THREE.Scene
+	resources: Resources
 	resourceMatcap: any
 	debug: any
 	debugObject: { color: string }
@@ -40,9 +41,9 @@ export default class Floor {
 
 	setMaterial() {
 		this.material = new THREE.MeshStandardMaterial({
-			color: '#ffffff',
-			metalness: 0.85,
-			roughness: 0.16,
+			color: '#c061cb',
+			metalness: 0.94,
+			roughness: 0,
 		})
 	}
 

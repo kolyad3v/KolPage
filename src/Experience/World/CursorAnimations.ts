@@ -1,12 +1,20 @@
 import * as THREE from 'three'
-import { lerp } from 'three/src/math/MathUtils'
 import Experience from '../Experience'
+import Time from '../Utils/Time';
+import Sizes from '../Utils/Sizes';
 
 export default class CursorAnimations {
+	experience: Experience
+	environmentMap: { intensity: number; texture: THREE.CubeTexture }
+	pointLight?: THREE.PointLight
+	camera: THREE.Camera
+	time: Time
+	sizes: Sizes
+	mouse: THREE.Vector2
 	constructor() {
 		this.experience = new Experience()
-		this.environment = this.experience.world.environment.environmentMap
-		this.pointLight = this.experience.world.pointLight.light
+		this.environmentMap = this.experience.world.environment.environmentMap
+		// this.pointLight = this.experience.world.pointLight.light
 		this.camera = this.experience.camera.instance
 		this.time = this.experience.time
 
@@ -36,7 +44,9 @@ export default class CursorAnimations {
 		// this.environment.updateMaterials()
 
 		// Edit the point light to change attributes as cursor moves
-		this.pointLight.position.y = this.mouse.y * 0.5
+		if (this.pointLight) {
+			this.pointLight.position.y = this.mouse.y * 0.5
+		}
 		// this.pointLight.intensity = 50 - Math.abs(this.mouse.y * 50)
 
 		// Set up a parralax effect for camera movement on cusor movement

@@ -7,9 +7,7 @@ import Camera from './Camera.ts'
 import Renderer from './Renderer.ts'
 import World from './World/World.ts'
 import Resources from './Utils/Resources.ts'
-
 import sources from './sources.ts'
-
 let instance: null | Experience = null
 
 export default class Experience {
