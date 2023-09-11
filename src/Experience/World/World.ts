@@ -89,14 +89,14 @@ export default class World {
 			this.environment = new Environment()
 
 			// Bio
-			this.bioHeader = new Text('Nick Gillham', { x: 8.7, y: 2, z: 3 }, -0.5, 0.7)
-			this.bioText = new Text(
-				'FE: 3js, TS, Vue/React',
-				{ x: 8.7, y: 1.1, z: 3 },
-				-0.5,
-				0.3
-			)
-			this.bioText = new Text('BE: C#,.NET', { x: 8.7, y: 0.5, z: 3 }, -0.5, 0.3)
+			// this.bioHeader = new Text('Nick Gillham', { x: 8.7, y: 2, z: 3 }, -0.5, 0.7)
+			// this.bioText = new Text(
+			// 	'FE: 3js, TS, Vue/React',
+			// 	{ x: 8.7, y: 1.1, z: 3 },
+			// 	-0.5,
+			// 	0.3
+			// )
+			// this.bioText = new Text('BE: C#,.NET', { x: 8.7, y: 0.5, z: 3 }, -0.5, 0.3)
 
 			// Raycaster For Animations
 

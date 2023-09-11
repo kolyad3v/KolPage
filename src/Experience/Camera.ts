@@ -46,11 +46,7 @@ export default class Camera {
 	setControls() {
 		this.controls = new OrbitControls(this.instance, this.canvas)
 		this.controls.enableDamping = true
-		this.controls.target = new Vector3(
-			3.9906944166465905,
-			0.6879468680988509,
-			1.3662524336256123
-		)
+		this.controls.target = new Vector3(3, 0.6879468680988509, 1.6)
 
 		// this.controls.dampingFactor = 0.5 not quite sure what this does, trying to slow the damping down. lets try:
 		// that's the one.

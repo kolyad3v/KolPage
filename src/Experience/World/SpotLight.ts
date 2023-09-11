@@ -143,7 +143,7 @@ export default class InteractiveSpotLight {
 	}
 
 	update() {
-		this.light.target.position.x = this.mouse.x * 10
+		this.light.target.position.x = this.mouse.x * 20
 		this.light.target.position.z = -this.mouse.y * 10
 	}
 }
