@@ -78,9 +78,9 @@ export default class Raycaster extends EventEmitter {
 			gsap.to(this.controls.target, {
 				duration: 2,
 				ease: 'power2.inOut',
-				x: 0,
-				y: 1.6,
-				z: 3.2,
+				x: 1,
+				y: 0.68,
+				z: 1.6,
 			})
 			gsap.to(this.controls.object.position, {
 				duration: 2,
@@ -219,9 +219,9 @@ export default class Raycaster extends EventEmitter {
 			gsap.to(this.controls.target, {
 				duration: 2,
 				ease: 'power2.inOut',
-				x: 3.9906944166465905,
-				y: 0.6879468680988509,
-				z: 1.3662524336256123,
+				x: 1,
+				y: 0.68,
+				z: 1.6,
 			})
 			this.infoBoxSpace.classList.remove('visible')
 			this.infoBoxRmj.classList.remove('visible')
